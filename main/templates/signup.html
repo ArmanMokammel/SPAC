@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup | SPAC-23</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        header {
+            background-color: #005daa; /* IEEE blue color */
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        header img {
+            max-width: 100px; /* Adjusted max-width for a larger logo */
+            height: auto;
+            margin-bottom: 0.5px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 5vh auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px; /* Reduced margin below the h1 element */
+        }
+
+        .signup-form h1 {
+            margin-bottom: 1vh;
+            color: #005daa; /* IEEE blue color */
+        }
+
+        .signup-form label {
+            margin-bottom: 10px;
+            color: #333; /* Dark text color */
+        }
+
+        .signup-form input[type="email"],
+        .signup-form input[type="text"],
+        .signup-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-form button[type="submit"] {
+            width: 100%;
+            padding: 10px 20px;
+            background-color: #005daa; /* IEEE blue color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-form button[type="submit"]:hover {
+            background-color: #004080; /* Darker shade on hover */
+        }
+
+        .signup-form p {
+            margin-top: 10px;
+            color: #666;
+        }
+
+        .signup-form a {
+            color: #005daa; /* IEEE blue color */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-form a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://ieeensusb.org/wp-content/uploads/2021/03/INSB-main-logo.png" alt="IEEE Logo">
+        <h1>Signup</h1>
+    </header>
+
+    <div class="container">
+        <div class="signup-form">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+            <form method="POST">
+                {% csrf_token %}
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password">
+
+                <button type="submit">Signup</button>
+
+                <p>Already have an Account? <span><a href="{% url 'main:login_page' %}">Login</a></span></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

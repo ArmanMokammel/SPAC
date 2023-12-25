@@ -1,0 +1,224 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details | SPAC-23</title>
+
+    {% block common_css %}
+    {% include "common_css.html" %}
+    {% endblock common_css %}
+
+    <link rel="stylesheet" href="{% static 'newTable.css' %}" type="text/css" />
+
+    <style>
+        body, html {
+            margin: 0;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            min-height: 75vh;
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            border-radius: 8px;
+        }
+
+        #left-card {
+            border-right: none;
+            text-align: center;
+        }
+
+        #right-card {
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #e6e6e6;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        #update-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #update-btn:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            z-index: 999;
+        }
+
+        .back-link {
+            display: inline-block;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: #45a049;
+        }
+
+        .app-body {
+            justify-content: center;
+            margin-left: 5%;
+            margin-right: 5%;
+            min-height: 15vh;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 2%;
+        }
+
+        .alert {
+            width: 100%;
+            margin: auto;
+        }
+
+        @media (min-width: 768px) {
+            .card {
+                width: 45%;
+                margin-right: 20px;
+            }
+
+            #left-card {
+                border-right: 2px solid #e6e6e6;
+            }
+
+            #right-card {
+                text-align: left;
+            }      
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                top: 100px;
+                left: 220px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="back-button">
+        <a href="{% url 'main:reg_students' %}" class="back-link">Back</a>
+    </div>
+    <div ui-view class="app-body">
+        <br>
+        <h2><b>Student Details</b> of <span style="color:#00629B;">{{student.name}}</span></h2>
+        <br>
+    </div>
+    <!--Messages-->
+    <div style="justify-content:center; text-align:center; margin:auto; width:50%">
+        {% for message in messages %}
+        <p>
+            <div class="alert alert-dismissible fade show alert-{{message.tags}}" role="alert">
+                {{message}}
+            </div>
+        </p>
+        {% endfor %}
+    </div>
+    <!--Messages End-->
+    <div class="card-container">
+        <div id="left-card" class="card">
+            <h2>Items List</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>T-Shirt</td>
+                            <td><input type="checkbox" name="t_shirt" {% if student_items.t_shirt %}checked{% endif %}></td>
+                        </tr>
+                        <tr>
+                            <td>Goodies</td>
+                            <td><input type="checkbox" name="goodies" {% if student_items.goodies %}checked{% endif %}></td>
+                        </tr>
+                        <tr>
+                            <td>Certificate</td>
+                            <td><input type="checkbox" name="certificate" {% if student_items.certificate %}checked{% endif %}></td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+                <button type="submit" id="update-btn">Update</button>
+            </form>
+        </div>
+
+        <div id="right-card" class="card">
+            <h2>Student Details</h2>
+            <div>
+                <p><strong>IEEE ID: </strong>{{student.ieee_id}}</p>
+                <p><strong>Name: </strong>{{student.name}}</p>
+                <p><strong>Email: </strong>{{student.email}}</p>
+                <p><strong>University: </strong>{{student.university}} ({{student.department}})</p>
+                <p><strong>University ID: </strong>{{student.university_id}}</p>
+                <p><strong>Reference: </strong>{{student.reference}}</p>
+                <p><strong>Transaction ID: </strong>{{student.transaction_id}}</p>
+
+                <h3>Miscellaneous</h3>
+                <p><strong>T-Shirt Size: </strong>{{student.t_shirt_size}}</p>
+                <p><strong>Picture Link: </strong><a style="color:#00629B"
+                        href="{{student.picture_link}}">{{student.picture_link}}</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</body>
+
+</html>

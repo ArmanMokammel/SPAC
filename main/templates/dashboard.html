@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IEEE SPAC-23 Dashboard</title>
+  {% block common_css %}
+    {% include "common_css.html" %}
+    {% endblock common_css %}
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+
+    .card {
+      border: 2px solid #009cde;
+      border-radius: 8px;
+      padding: 50px; /* Increased padding for a larger card */
+      text-align: center;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-size: 24px; /* Increased font size for the heading */
+      color: #009cde;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 30px; /* Increased padding for larger buttons */
+      margin: 10px;
+      font-size: 18px; /* Increased font size for buttons */
+      color: #ffffff;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, border 0.3s;
+      border: 2px solid transparent; /* Added border property */
+    }
+
+    .button-registered {
+      background-color: #009cde; /* Blue color from IEEE branding guide */
+      border-color: #007bb5; /* Border color for the Blue button */
+    }
+
+    .button-attendance {
+      background-color: #f27935; /* Orange color from IEEE branding guide */
+      border-color: #d86915; /* Border color for the Orange button */
+    }
+
+    .button-sessions {
+      background-color: #60a539; /* Green color from IEEE branding guide */
+      border-color: #4b7d31; /* Border color for the Green button */
+    }
+
+    .button:hover {
+      background-color: #004466; /* Darker shade on hover for all buttons */
+      border-color: #002b3d; /* Darker border color on hover for all buttons */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>IEEE SPAC-23</h2>
+    <a href="{% url 'main:reg_students' %}" class="button button-registered">Registered Students</a>
+    <a href="{% url 'main:reg_students_attendance' %}" class="button button-attendance">Attendance</a>
+    <a href="{% url 'main:sessions_page' %}" class="button button-sessions">Sessions</a>
+    <a href="{% url 'main:timer' %}" class="button button-sessions">Prayer Break</a>
+  </div>
+
+</body>
+</html>
